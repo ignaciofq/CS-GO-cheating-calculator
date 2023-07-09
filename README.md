@@ -10,4 +10,4 @@ You will find a Jupyter folder with three notebooks
 3. Exploratory Data Analysis
 4. Feature Engineering
 5. Model Selection, Training and Evaluation
-6. Application Examples
+6. Application Examplesd
