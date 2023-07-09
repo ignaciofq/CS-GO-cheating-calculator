@@ -5,7 +5,7 @@ This project's scope is to explore the application of Machine Learning models as
 # Index
 You will find a Jupyter folder with three notebooks
 
-[0. Introduction](https://github.com/ignaciofq/CS-GO-cheating-calculator/edit/main/README.md#introduction)
+[0. Introduction](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#introduction)
 1. Data Collection, Cleaning and Preprocessing
 2. Exploratory Data Analysis and Feature Creation
 3. Model Selection, Training and Evaluation
