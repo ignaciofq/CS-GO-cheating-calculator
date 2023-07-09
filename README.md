@@ -5,9 +5,9 @@ This project's scope is to explore the application of Machine Learning models as
 # Project Structure and Index
 You will find a Jupyter folder with three notebooks
 
-1. Data Collection
-2. Data Cleaning and Preprocessing
-3. Exploratory Data Analysis
-4. Feature Engineering
-5. Model Selection, Training and Evaluation
-6. Application Examplesd
+1. Data Collection, Cleaning and Preprocessing
+2. Exploratory Data Analysis and Feature Creation
+3. Model Selection, Training and Evaluation
+4. Application Examples
+5. Conclusion and Further Analysis
+  
