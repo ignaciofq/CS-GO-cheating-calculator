@@ -53,7 +53,7 @@ The data is now normalized using a logarithmic function (log1p) to compress the 
 To explore the correlation matrix and density plots, please refer to _[model_training.ipynb](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/model_training.ipynb)_.
 
 # 3. Model Selection, Training and Evaluation
-Following the standard process of Machine Learning models, we've split the data in training and test set, tried out different classification logarithms and evaluated them to choose the one with the best accuracy. During the evaluation, we observe that the Random Forests algorithm performs significantly better than Logistic Regression and therefore is the chosen model to continue the project. Since we are looking for a probability and not just binary classification, it's mandatory to use an algorithm that allows probability calculation.
+Following the standard process of Machine Learning models, we've split the data in training and test set, tried out different classification algorithms and evaluated them to choose the one with the best accuracy. During the evaluation, we observe that the Random Forests algorithm performs significantly better than Logistic Regression and therefore is the chosen model to continue the project. Since we are looking for a probability and not just binary classification, it's mandatory to use an algorithm that allows probability calculation.
 #### Model Performance
 The classification model achieved an accuracy of 89% in predicting whether a player is a cheater or not (macro average). It also shows a strong capacity to distinguish classes (ROC AUC Score: 0.94).  
 Confusion Matrix:   
