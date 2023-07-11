@@ -15,14 +15,14 @@ The below sections provide a high-level overview of the project. For detailed im
 [1. Data Collection, Cleaning and Preprocessing](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#1-data-collection-cleaning-and-preprocessing)  
 [2. Exploratory Data Analysis and Feature Creation](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#2-exploratory-data-analysis-and-feature-creation)  
 [3. Model Selection, Training and Evaluation](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#3-model-selection-training-and-evaluation)  
-[4. Limitations](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#4-limitations)
+[4. Limitations](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#4-limitations)  
 [5. Application Examples](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#4-application-examples)  
 [6. Conclusion and Further Analysis](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#5-conclusion-and-further-analysis)  
 
 # Introduction 
 This project is a demonstration of the application of Machine Learning algorithms in the fight against cheating. The game of choice is Counter-Strike: Global Offensive thanks to the extensive documentation on [Steamworks Web API](https://partner.steamgames.com/doc/webapi) and the availability of different stat-tracking sources. This made it ~~almost~~ possible to obtain the needed data to create this project. 
 
-Due to critical data limitations ([4. Limitations](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#4-limitations)), this specific model's accuracy is not reliable. However, any developer with a publisher API key or a studio with direct access to their player's stats and ban status query will be able to generate a reliable-enough dataset.   
+Due to critical data limitations ([4. Limitations](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/README.md#4-limitations)), this specific model's accuracy is not completely reliable. However, any developer with a publisher API key or a studio with direct access to their player's stats and ban status query will be able to generate a reliable-enough dataset for their game.   
 # 1. Data Collection, Cleaning and Preprocessing
 The very first step was to create two separated lists of Steam IDs, one for banned players and one for experienced players that have not been banned. The sources used for the straction are two:
 
@@ -48,15 +48,15 @@ The features of the model are:
 6. **Damage per Round `dmg_round`:** Calculates the average damage inflicted per round.
 7. **Contribution per Round `contribution_round`:** Represents the average contribution score per round.`
 
-The data is now normalized using a logarithmic function (log1p) to compress the scale of the data and mitigate the effect of outliers. The final dataset is exported as "player_stats.xlsx".
+The final dataset is exported as "player_stats.xlsx" and then normalized using a logarithmic function (log1p) to compress the scale of the data and mitigate the effect of outliers. 
 
 To explore the correlation matrix and density plots, please refer to _[model_training.ipynb](https://github.com/ignaciofq/CS-GO-cheating-calculator/blob/main/model_training.ipynb)_.
 
 # 3. Model Selection, Training and Evaluation
-Following the standard process of Machine Learning models, we've split the data in training and test set, tried out different classification algorithms and evaluated them to choose the one with the best accuracy. During the evaluation, we observe that the Random Forests algorithm performs significantly better than Logistic Regression and therefore is the chosen model to continue the project. Since we are looking for a probability and not just binary classification, it's mandatory to use an algorithm that allows probability calculation.
+Following the standard process of Machine Learning models, the data is split in training and test set, different classification algorithms are tried out and evaluated to choose the one with the best accuracy. During the evaluation, we observe that the Random Forests algorithm performs significantly better than Logistic Regression and therefore is the chosen model to continue the project. Since we are looking for a probability and not just binary classification, it's mandatory to use an algorithm that allows probability calculation.
 #### Model Performance
 The classification model achieved an accuracy of 89% in predicting whether a player is a cheater or not (macro average). It also shows a strong capacity to distinguish classes (ROC AUC Score: 0.94).  
-Confusion Matrix:   
+Confusion Matrix:  
 >True negatives (TN): 253 non-cheaters correctly classified as non-cheaters.  
 >False positives (FP): 32 non-cheaters incorrectly classified as cheaters.  
 >False negatives (FN): 26 cheaters incorrectly classified as non-cheaters.  
@@ -66,7 +66,7 @@ To review the Classification Report, Confusion Matrix and ROC AUC Score, please 
 # 4. Limitations
 **General Limitations:**
 - The games, their content, their telemetry systems and users' behaviors (together with underlying patterns) change over time. These models will need to be constantly reviewed to adapt to evolving cheating techniques and player strategies.
-- There will always be cases that fall in the gray zone between classes, leading to legitimate players being classified as cheaters.
+- There is a high chance of false positive cases, leading to legitimate players being classified as cheaters.
 - Distinguishing between a top-tier player and a highly skilled cheater can be challenging, as both may exhibit exceptional statistics.
 
 **Specific Limitations to This Model:**
@@ -75,22 +75,21 @@ To review the Classification Report, Confusion Matrix and ROC AUC Score, please 
 - Additionally, we have no guarantee that the VACbann was received for cheating specifically in CS:GO (there are over 100 Steam games that use Valve Anti-Cheat). **This point is enough to question the accuracy of the model and results of the evaluation.**
 - The accuracy data does not take weapon type into consideration, missing insights into specific cheating behaviors, like the use of the Scout sniper, for example.
 - We have no guarantee that the experienced players are not cheaters.
+- If a player opts out of tracking their stats, the API wont be able to retrieve their stats.
 
-These limitations should be taken into account when interpreting the model's results and making decisions based on its predictions.
+Kindly consider the above when interpreting the model's results and making decisions based on its predictions.
 # 5. Application Examples
-This project is considered demonstrative as the limitations pose a concern on the model's accuracy. However, these steps can be followed by game developers to implement in their multiplayer games a statistical automated cheat detection. Even with strong data foundations, it would be recommendable to implement a high cutoff (e.g only ban above 90% chance of being a cheater) even at the cost of catching less cheaters, as the risk of banning innocent people could be considered a high one.
+These steps can be followed by game developers to implement in their multiplayer games a statistical automated cheat detection. Even with strong data foundations, it would be recommendable to implement a high cutoff (e.g only ban above 90% chance of being a cheater) even at the cost of catching less cheaters, as the risk of banning innocent people could be considered a high one.
 
-This tool can also be used for consultation for Customer Support teams when handling ban appeals, for example in edge cases where the player was banned by the community (Overwatch/Manual ban systems).
+This tool can also be used for consultation for Customer Support teams when handling ban appeals, for example in cases where the player was banned by the community (Overwatch/Manual ban systems).
 
 Of course, feel free to use this calculator to judge your oponents in matchmaking and make educated accusations of cheating.
-# 6. Conclusion
-As with any project involving player behavior and cheating detection, there are several ethical considerations that need to be addressed:
+# 6. Conclusion and Ethical Considerations
+1. **Data Privacy**: This project only retrieves public information, however, game developers may have access to private data that would be extremely interesting to explore for a model like this. Not being able to consult if the VACBan is specific for CS:GO has been a mayor limitation to this model. It goes without saying that a correct and accurate initial dataset is crucial to train accurate and reliable ML models. 
 
-1. **Privacy and Data Protection**: This project only retrieves public information, however, game developers may have access to private data that would be extremely interesting to explore for a model like this. Not being able to consult if the VACBan is specific for CS:GO has been a mayor limitation to this model. It goes without saying that a correct and accurate initial dataset is crucial to train accurate and reliable ML models. 
+2. **False Positives and Fairness**: There will always be a chance of flagging innocent players as potential cheaters. Striking the right balance between catching cheaters and minimizing false positives is key to avoid harming innocent players' experiences and, therefore, your reputation.    
+I believe that a certain degree of false positive is acceptable as long as there is a well-structured process to handle ban appeals, and the respective Support Team is equipped with the right tools to make an educated decision.
 
-2. **False Positives and Fairness**: The model's predictions, as accurate and refined as they may be, may result in false positives, flagging innocent players as potential cheaters. Striking the right balance between accurately identifying cheaters and minimizing false accusations is essential to ensure fairness and avoid harming innocent players' experiences and, therefore, your reputation.    
-I believe that a certain degree of false positive is acceptable as long as there is a well-structured process to handle ban appeals and the respective Support Team is equipped with the right tools to make an educated decision.
+4. **Transparency**: It is important to explain to your playerbase the efforts made to fight cheating, while at the same time making the process as opaque as possible for cheaters to adapt to.
 
-4. **Transparency and Explainability**: This is probably the trickiest point, as it is important to explain to your playerbase your efforts to fight cheating, while at the same time making the process as opaque as possible for cheaters to adapt to.
-
-5. **Bias and Discrimination**: This model has a substantial bias in the "experienced" player pool selected and the decision to train the model with experienced players and not with a random selection of players. It is crucial to either mitigate or justify your bias.
+5. **Bias**: This model has a substantial bias in the "experienced" player pool selected and the decision to train the model with experienced players and not with a random selection of players. It is crucial to either mitigate or justify your bias.
